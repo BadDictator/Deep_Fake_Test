@@ -1,8 +1,23 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import (Conv2D, MaxPooling2D, Flatten, Dense, 
-                                     Dropout, LSTM, TimeDistributed, 
+from tensorflow.keras.layers import (Conv2D, MaxPooling2D, Flatten, Dense,
+                                     Dropout, LSTM, TimeDistributed,
                                      Bidirectional, GRU, Input)
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# Image augmentation function
+def image_augment(X_images, y_images):
+    datagen = ImageDataGenerator(
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True,
+        fill_mode='nearest'
+    )
+
+    return datagen.flow(X_images, y_images, batch_size=32)
 
 # Features extracted in CNN: edges, textures, spatial relationships, representations of facial landmarks or objects (high-level patterns).
 # Featues extracted in LSTM: temporal and acoustic features (pitch variations, rhythm, speaker characteristics, anomalies, or artifacts).
