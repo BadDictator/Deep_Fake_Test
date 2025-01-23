@@ -4,6 +4,14 @@ from tensorflow.keras.layers import (Conv2D, MaxPooling2D, Flatten, Dense,
                                      Dropout, LSTM, TimeDistributed, 
                                      Bidirectional, GRU, Input)
 
+# Features extracted in CNN: edges, textures, spatial relationships, representations of facial landmarks or objects (high-level patterns).
+# Featues extracted in LSTM: temporal and acoustic features (pitch variations, rhythm, speaker characteristics, anomalies, or artifacts).
+# CNN model Output: represented as a vector of numerical values.
+# LSTM model Output: represented as a vector of numerical values.
+
+# Combined input: Vector of numerical values from CNN and LSTM.
+# Combined output: 0 or 1.
+
 # CNN for Image-based Deep Fake Detection.
 def create_cnn(input_shape=(128, 128, 3)):
 
