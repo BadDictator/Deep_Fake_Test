@@ -69,3 +69,12 @@ def create_combined_model(image_shape=(128, 128, 3), audio_shape=(100, 20)):
     model = Model(inputs=[cnn_input, lstm_input], outputs=combined_output)
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
+
+
+# Why CNN?: Local Feature Detection, Spatial Invariance, Feature Hierarchy, Computational Efficiency.
+# Why not RNN?: Vanishing/exploding gradient problem. 
+# Why not FCNs?: FCNs require processing all pixels in the image.
+
+# Why LSTM? : Handling Sequential Data, Capturing Long-Term Dependencies, Robustness to Noise.
+# Why not RNN?: Vanishing/exploding gradient problem.
+# Why not FNN?: Feedforward Neural Networks cannot handle sequential data.
