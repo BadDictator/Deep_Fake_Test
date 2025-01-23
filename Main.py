@@ -44,7 +44,7 @@ def create_combined_model(image_shape=(128, 128, 3), audio_shape=(100, 20)):
 
     # CNN for image processing
     cnn_input = Input(shape=image_shape, name="image_input")
-    cnn_model = create_cnn(image_shape)
+    cnn_model = create_cnn(image_shape) # Create instance of CNN model.
     cnn_output = cnn_model(cnn_input)
 
     # LSTM for audio processing
@@ -54,42 +54,10 @@ def create_combined_model(image_shape=(128, 128, 3), audio_shape=(100, 20)):
 
     # Combine the outputs
     combined = tf.keras.layers.concatenate([cnn_output, lstm_output])
-    combined_dense = Dense(64, activation='relu')(combined)
+    combined_dense = Dense(64, activation='relu')(combined) # 64 neurons and ReLU for better combination.
     combined_output = Dense(1, activation='sigmoid', name="combined_output")(combined_dense)
 
     # Create the full model
     model = Model(inputs=[cnn_input, lstm_input], outputs=combined_output)
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
-
-# Example Training Workflow
-if __name__ == "__main__":
-    # Assuming you have preprocessed datasets
-    # For images: `X_images`, `y_images`
-    # For audio: `X_audio`, `y_audio`
-    # For combined training: `[X_images, X_audio]`, `y_combined`
-
-    # Mock dataset shapes (replace with real data loading)
-    import numpy as np
-    X_images = np.random.rand(1000, 128, 128, 3)  # 1000 samples of 128x128 RGB images
-    y_images = np.random.randint(0, 2, 1000)     # Binary labels (0 or 1)
-
-    X_audio = np.random.rand(1000, 100, 20)      # 1000 samples of 100 timesteps, 20 features each
-    y_audio = np.random.randint(0, 2, 1000)     # Binary labels (0 or 1)
-
-    # Create models
-    cnn_model = create_cnn()
-    lstm_model = create_lstm()
-    combined_model = create_combined_model()
-
-    # Train CNN (Image-based)
-    cnn_model.fit(X_images, y_images, epochs=10, batch_size=32, validation_split=0.2)
-
-    # Train LSTM (Audio-based)
-    lstm_model.fit(X_audio, y_audio, epochs=10, batch_size=32, validation_split=0.2)
-
-    # Train Combined Model
-    combined_model.fit(
-        [X_images, X_audio], y_images,  # Use the same labels for simplicity in this example
-        epochs=10, batch_size=32, validation_split=0.2
-    )
