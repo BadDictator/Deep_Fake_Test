@@ -1,1 +1,3 @@
-# Deep_Fake_Test
+# Deep Fake Detector Project
+
+Team: Yash Tripathi and Vishwa Kanjani.
